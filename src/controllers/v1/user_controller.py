@@ -29,6 +29,7 @@ def create_user(data : UserCreate = Depends(validate_unique_email), db : Session
         )
 
 
+
 #Read user
 @router.get("/", response_model=list[UserResponse], status_code=status.HTTP_200_OK)
 def read_user(filters : Annotated[UserFilters,Query()], db : Session = Depends(get_db)):
@@ -39,7 +40,7 @@ def read_user(filters : Annotated[UserFilters,Query()], db : Session = Depends(g
 
     if filters.email:
         user = user.filter(UserModel.email.like(f"%{filters.email}%"))
-        
+
     return user.all()
 
 #Read specific user
@@ -52,6 +53,7 @@ def read_specific_user(id : int, db : Session = Depends(get_db)):
             detail = "Data not found"
         )
     return user
+
 
 
 #Delete user
